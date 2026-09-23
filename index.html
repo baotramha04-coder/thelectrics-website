@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THelectrics</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Work+Sans:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:#FAFAF7;
+    --surface:#FFFFFF;
+    --ink:#1C2430;
+    --muted:#5B6472;
+    --accent:#E8912B;
+    --accent-hover:#D67F1C;
+    --border:#E7E2D6;
+    --focus:#1C2430;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14181F;
+      --surface:#1B212B;
+      --ink:#F2F0EA;
+      --muted:#9BA3AF;
+      --accent:#F0A43D;
+      --accent-hover:#F5B863;
+      --border:#2A313C;
+      --focus:#F0A43D;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14181F;
+    --surface:#1B212B;
+    --ink:#F2F0EA;
+    --muted:#9BA3AF;
+    --accent:#F0A43D;
+    --accent-hover:#F5B863;
+    --border:#2A313C;
+    --focus:#F0A43D;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Work Sans", -apple-system, "Segoe UI", sans-serif;
+    font-size:20px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:"Manrope", -apple-system, "Segoe UI", sans-serif;
+    font-weight:800;
+    line-height:1.12;
+    text-wrap:balance;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  p{margin:0;}
+  a{color:inherit;}
+  img,svg{max-width:100%;}
+  ::selection{background:var(--accent);color:var(--ink);}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:3px;}
+  .icon{width:22px;height:22px;flex-shrink:0;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+  @media (prefers-reduced-motion: no-preference){
+    .fade-up{animation:fadeUp .6s ease-out both;}
+    .fade-up.d1{animation-delay:.08s;}
+    .fade-up.d2{animation-delay:.16s;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  }
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  header{position:sticky;top:0;z-index:40;background:color-mix(in srgb, var(--bg) 90%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 0;}
+  .brand{display:flex;align-items:center;gap:9px;text-decoration:none;}
+  .brand .mark{width:34px;height:34px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .brand .mark svg{stroke:var(--ink);width:19px;height:19px;}
+  .brand span{font-family:"Manrope",sans-serif;font-weight:800;font-size:1.22rem;letter-spacing:-0.01em;}
+  .navlinks{display:flex;align-items:center;gap:26px;font-size:0.94rem;font-weight:500;}
+  .navlinks a{text-decoration:none;color:var(--muted);}
+  .navlinks a:hover{color:var(--ink);}
+  @media (max-width:780px){.navlinks{display:none;}}
+  .header-actions{display:flex;align-items:center;gap:14px;}
+  .phone-link{display:flex;align-items:center;gap:7px;font-weight:700;font-size:0.98rem;text-decoration:none;white-space:nowrap;}
+  .phone-link svg{width:17px;height:17px;stroke:var(--accent);}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:"Manrope",sans-serif;font-weight:700;font-size:0.95rem;text-decoration:none;padding:12px 22px;border-radius:9px;white-space:nowrap;border:1.5px solid transparent;}
+  .btn-solid{background:var(--accent);color:var(--ink);}
+  .btn-solid:hover{background:var(--accent-hover);}
+  .btn-outline{border-color:var(--border);color:var(--ink);}
+  .btn-outline:hover{border-color:var(--accent);}
+
+  .hero{padding:76px 0 60px;}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:720px;}
+  .eyebrow{font-weight:700;font-size:0.86rem;color:var(--accent);letter-spacing:0.01em;}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.2rem);margin-top:10px;}
+  .hero p.lede{font-size:1.14rem;color:var(--muted);margin:20px 0 30px;max-width:52ch;}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;}
+  .trust-strip{display:flex;gap:28px;flex-wrap:wrap;}
+  .trust-item{display:flex;align-items:center;gap:9px;font-size:0.92rem;font-weight:500;color:var(--muted);}
+  .trust-item svg{width:18px;height:18px;stroke:var(--accent);}
+
+  section{padding:64px 0;border-top:1px solid var(--border);}
+  .section-head{max-width:600px;margin-bottom:40px;}
+  .section-head .eyebrow{display:block;margin-bottom:8px;}
+  .section-head h2{font-size:clamp(1.55rem,3vw,2.1rem);}
+  .section-head p{color:var(--muted);margin-top:12px;font-size:1.02rem;}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){.grid-3{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.grid-3{grid-template-columns:1fr;}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;display:flex;flex-direction:column;gap:14px;}
+  .card .icon-badge{width:44px;height:44px;border-radius:10px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;}
+  .card h3{font-size:1.06rem;}
+  .card p{color:var(--muted);font-size:0.96rem;}
+
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  @media (max-width:860px){.grid-4{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.grid-4{grid-template-columns:1fr;}}
+  .why-item{display:flex;flex-direction:column;gap:12px;}
+  .why-item .icon-badge{width:46px;height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;}
+  .why-item h3{font-size:1.0rem;}
+  .why-item p{color:var(--muted);font-size:0.92rem;}
+
+  .areas-band{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
+  .areas-band p{color:var(--muted);max-width:34ch;}
+  .pills{display:flex;flex-wrap:wrap;gap:9px;max-width:520px;}
+  .pill{font-size:0.88rem;font-weight:500;padding:8px 14px;border-radius:999px;background:var(--bg);border:1px solid var(--border);}
+
+  .faq-item{border-bottom:1px solid var(--border);padding:18px 0;}
+  .faq-item summary{font-family:"Manrope",sans-serif;font-weight:700;font-size:1.03rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary .plus{width:22px;height:22px;flex-shrink:0;border-radius:6px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--accent);}
+  .faq-item[open] summary .plus{transform:rotate(45deg);}
+  .faq-item p{color:var(--muted);margin-top:12px;max-width:64ch;}
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;}
+  @media (max-width:800px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-grid h2{font-size:clamp(1.6rem,3vw,2.15rem);max-width:16ch;}
+  .contact-cards{display:flex;flex-direction:column;gap:12px;}
+  .contact-card{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+  .contact-card .left{display:flex;align-items:center;gap:14px;}
+  .contact-card .icon-badge{width:38px;height:38px;border-radius:9px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .contact-card .k{font-size:0.78rem;color:var(--muted);}
+  .contact-card .v{font-weight:700;text-decoration:none;font-size:1rem;}
+  .copy-btn{font-size:0.75rem;font-weight:600;color:var(--muted);background:none;border:1px solid var(--border);padding:6px 10px;cursor:pointer;border-radius:7px;}
+  .copy-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+  footer{border-top:1px solid var(--border);padding:32px 0;}
+  .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.86rem;color:var(--muted);}
+  .foot-brand{display:flex;align-items:center;gap:8px;font-family:"Manrope",sans-serif;font-weight:700;color:var(--ink);}
+  .foot-brand .mark{width:24px;height:24px;border-radius:6px;background:var(--accent);display:flex;align-items:center;justify-content:center;}
+  .foot-brand .mark svg{width:13px;height:13px;stroke:var(--ink);}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" stroke-width="1.8" stroke-linejoin="round" fill="none"/></svg></span>
+      <span>THelectrics</span>
+    </a>
+    <nav class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#why-us">Why Us</a>
+      <a href="#areas">Areas</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <a class="phone-link" href="tel:0468313233">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8Z"/></svg>
+        0468 31 32 33
+      </a>
+      <a class="btn btn-solid" href="#contact">Get a Quote</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid fade-up">
+      <div class="eyebrow">Licensed Electrician — Kealba &amp; Melbourne's West</div>
+      <h1>Powering Your Home, FAST & RIGHT.</h1>
+      <p class="lede">THelectrics handles everything from powerpoints to full switchboard upgrades for homes and businesses across Melbourne's west — fast, tidy, and fully licensed.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-solid" href="tel:0468313233">Call 0468 31 32 33</a>
+        <a class="btn btn-outline" href="#contact">Get a free quote</a>
+      </div>
+      <div class="trust-strip">
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3 8 8 9 5-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>Licensed &amp; insured</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Same-week bookings</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>Based in Kealba, VIC</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Services</span>
+        <h2>Straightforward electrical work, done properly</h2>
+        <p>No callout theatrics — just licensed work, explained clearly, priced upfront.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 8h4M10 12h4M10 16h4"/></svg></div>
+          <h3>Switchboard upgrades &amp; safety switches</h3>
+          <p>Old fuse boxes replaced with compliant switchboards and RCD protection.</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 2Z"/></svg></div>
+          <h3>Powerpoints, lighting &amp; LED upgrades</h3>
+          <p>New circuits, downlights and LED retrofits for homes and offices.</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M4.2 4.2l2.2 2.2M17.6 17.6l2.2 2.2M3 12h3M18 12h3M4.2 19.8l2.2-2.2M17.6 6.4l2.2-2.2"/><circle cx="12" cy="12" r="4"/></svg></div>
+          <h3>Smoke alarm compliance</h3>
+          <p>Interconnected, up-to-standard alarms fitted for rentals and resales.</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M14.7 6.3 21 12l-6.3 5.7M9.3 6.3 3 12l6.3 5.7"/></svg></div>
+          <h3>Rewiring &amp; fault finding</h3>
+          <p>Tripping breakers, dead circuits and ageing wiring sorted properly.</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+          <h3>Emergency callouts</h3>
+          <p>Power out or something sparking? We answer the phone, not a machine.</p>
+        </div>
+        <div class="card">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
+          <h3>Commercial &amp; small business fit-outs</h3>
+          <p>Data, power and lighting for shops, offices and small warehouses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why-us">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Why THelectrics</span>
+        <h2>What you get with every job</h2>
+      </div>
+      <div class="grid-4">
+        <div class="why-item">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3 8 8 9 5-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>Licensed &amp; insured</h3>
+          <p>Fully qualified and covered on every job, big or small.</p>
+        </div>
+        <div class="why-item">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <h3>Upfront, fixed pricing</h3>
+          <p>You'll know the cost before we pick up a tool.</p>
+        </div>
+        <div class="why-item">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></div>
+          <h3>Tidy, reliable work</h3>
+          <p>We turn up on time and leave the site clean.</p>
+        </div>
+        <div class="why-item">
+          <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></div>
+          <h3>Local to Kealba</h3>
+          <p>Based in the west, servicing the suburbs we know well.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="areas">
+    <div class="wrap">
+      <div class="areas-band">
+        <div>
+          <span class="eyebrow" style="display:block;margin-bottom:8px;">Service area</span>
+          <p>Based in Kealba and working right across Melbourne's western suburbs.</p>
+        </div>
+        <div class="pills">
+          <span class="pill">Kealba</span>
+          <span class="pill">Sunshine</span>
+          <span class="pill">St Albans</span>
+          <span class="pill">Deer Park</span>
+          <span class="pill">Albion</span>
+          <span class="pill">Keilor</span>
+          <span class="pill">Taylors Lakes</span>
+          <span class="pill">Sydenham</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2>Common questions</h2>
+      </div>
+      <div>
+        <details class="faq-item" open>
+          <summary>Are you a licensed electrician?<span class="plus">+</span></summary>
+          <p>Yes — all work is carried out by a licensed, insured electrician in line with Victorian electrical safety requirements.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you handle emergency callouts?<span class="plus">+</span></summary>
+          <p>Yes. Text or Call 0468 31 32 33 and we'll talk through what's happening and get someone out as soon as we can.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Will I get a quote before work starts?<span class="plus">+</span></summary>
+          <p>Always. You'll get a transparent, upfront, fixed price before any work begins — no surprises on the invoice.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What suburbs do you cover?<span class="plus">+</span></summary>
+          <p>We're based in Kealba and regularly work across Sunshine, St Albans, Deer Park, Albion, Keilor, Taylors Lakes and Sydenham.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <span class="eyebrow" style="display:block;margin-bottom:8px;">Contact</span>
+          <h2>Get in touch with THelectrics</h2>
+          <p style="color:var(--muted);margin-top:16px;max-width:40ch;">Give us a call or send an email with what's going on — we'll get back to you the same day.</p>
+        </div>
+        <div class="contact-cards">
+          <div class="contact-card">
+            <div class="left">
+              <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8Z"/></svg></div>
+              <div><div class="k">Phone</div><a class="v" href="tel:0468313233">0468 31 32 33</a></div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="left">
+              <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6 8 7 8-7"/></svg></div>
+              <div><div class="k">Email</div><a class="v" href="mailto:Pha@thelectrics.net">Pha@thelectrics.net</a></div>
+            </div>
+            <button class="copy-btn" onclick="navigator.clipboard && navigator.clipboard.writeText('Pha@thelectrics.net').then(()=>{this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1400);})">Copy</button>
+          </div>
+          <div class="contact-card">
+            <div class="left">
+              <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+              <div><div class="k">Address</div><span class="v">208 Sunshine Avenue, Kealba, VIC 3021</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="foot-brand">
+      <span class="mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="none" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+      THelectrics
+    </div>
+    <span>208 Sunshine Avenue, Kealba, VIC 3021 &middot; 0468 31 32 33</span>
+    <span>&copy; 2026 THelectrics</span>
+  </div>
+</footer>
+</body>
+</html>
