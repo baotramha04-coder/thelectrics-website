@@ -1,0 +1,65 @@
+# THelectrics — Admin Panel Guide
+
+Your site can now be edited from a web page instead of code. This guide covers two things: getting the new files onto your live site, and how to use the admin panel day to day.
+
+## What changed
+
+The site used to be one file with everything typed directly into the code. It's now split into three pieces:
+
+- **`index.html`** — the page design (styles, layout, animations). You won't need to touch this.
+- **`content.json`** — all the actual words, prices, services, FAQs, phone numbers, etc. This is what the admin panel edits.
+- **`admin/index.html`** — the admin panel itself, which will live at `thelectricsaus.com/admin`.
+
+All three need to go into your GitHub repository, replacing the old single `index.html`.
+
+## Step 1: Upload the new files to GitHub
+
+The easiest way, no VS Code required:
+
+1. Go to your repository on github.com (the one connected to `thelectricsaus.com`).
+2. Click **Add file → Upload files**.
+3. Drag in `index.html` and `content.json` from this download — when it asks to replace the existing `index.html`, confirm.
+4. Also create the `admin` folder: while uploading, drag in the `admin` folder as-is (GitHub will keep the folder structure), or create it by naming the uploaded file `admin/index.html` in the file list before committing.
+5. Scroll down and click **Commit changes**.
+6. Wait about a minute for GitHub Pages to rebuild, then check `thelectricsaus.com` still looks right, and that `thelectricsaus.com/admin` loads the admin panel.
+
+(If you'd rather do this through VS Code and git like before: copy all three items into your local project folder, keeping `admin/index.html` inside an `admin` subfolder, then `git add .`, `git commit -m "Add content-managed site and admin panel"`, `git push`.)
+
+## Step 2: Get a GitHub access token (one-time setup)
+
+The admin panel needs permission to save changes to your repository. This is done with a personal access token — like a password just for this one job.
+
+1. Go to **[github.com/settings/personal-access-tokens/new](https://github.com/settings/personal-access-tokens/new)** (log into GitHub first).
+2. Name it something like "THelectrics admin".
+3. Under **Repository access**, choose **Only select repositories** and pick your website's repository.
+4. Under **Permissions → Repository permissions**, find **Contents** and set it to **Read and write**. Leave everything else as "No access".
+5. Click **Generate token** at the bottom, then **copy the token immediately** — GitHub only shows it once. If you lose it, just generate a new one.
+
+Keep this token private — treat it like a password. You can revoke or regenerate it any time from that same GitHub page if you ever need to.
+
+## Step 3: Use the admin panel
+
+1. Go to **thelectricsaus.com/admin**.
+2. Paste your token, and fill in:
+   - **GitHub username** — your GitHub account name
+   - **Repository name** — your website's repo name (usually `yourusername.github.io`)
+   - **Branch** — `main`
+   - **Content file path** — `content.json`
+3. Tick "Remember this token on this device" if it's your own computer (leave it off on a shared computer).
+4. Click **Connect**.
+
+From there you can edit everything: business name, accent color, logo, the header, the headline and intro text, every service card, the "why us" reasons, the suburbs you service, every FAQ question, contact details, the footer, and even the order and visibility of each section on the page. Use the **+ Add** / **↑ ↓** / **✕** buttons to add, reorder, or remove items like services or FAQs.
+
+When you're happy, click **Save changes** at the bottom. Your live site updates automatically about a minute later — GitHub rebuilds it in the background.
+
+A few notes:
+- If you leave the page with unsaved changes, it'll warn you first.
+- If you make a change you don't want, hit **Discard** to reload the last saved version.
+- **Log out** clears the saved token from this browser (do this if you're on a shared computer).
+
+## If something goes wrong
+
+- **"That token wasn't accepted"** — the token was mistyped, expired, or was revoked. Generate a new one and try again.
+- **"Couldn't find that repository or file"** — double-check the GitHub username and repository name are exactly right.
+- **"That token doesn't have permission"** — go back to your token settings and make sure Contents is set to Read and write for this repository.
+- If the site doesn't look updated after a couple of minutes, check the **Actions** tab on your GitHub repository — it shows whether the page is still rebuilding or hit an error.
