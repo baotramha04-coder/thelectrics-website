@@ -111,6 +111,38 @@
   #loading-screen{display:flex;flex-direction:column;align-items:center;gap:14px;padding:80px 20px;color:var(--muted);font-size:.9rem;}
   .field-title{font-family:"Manrope",sans-serif;font-weight:800;font-size:.92rem;margin:0 0 12px;}
   @media (max-width:560px){ .row2{grid-template-columns:1fr;} #topbar .bar{flex-wrap:wrap;} }
+
+  /* Tabs */
+  .tab-row{display:flex;gap:0;margin:0 0 24px;border-bottom:1.5px solid var(--line);}
+  .tab-btn{background:none;border:none;border-bottom:2.5px solid transparent;padding:10px 4px;margin-right:26px;font-family:"Manrope",sans-serif;font-weight:700;font-size:.95rem;color:var(--muted);cursor:pointer;}
+  .tab-btn:hover{color:var(--ink);}
+  .tab-btn.active{color:var(--ink);border-bottom-color:var(--accent);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  /* Preview & Notes */
+  .wrap-wide{max-width:1240px;}
+  .preview-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+  .preview-toolbar p.hint{margin:0;flex:1 1 260px;}
+  .preview-wrap{display:flex;gap:22px;align-items:flex-start;}
+  .preview-frame-col{flex:1 1 58%;min-width:0;}
+  .preview-iframe{width:100%;height:76vh;border:1.5px solid var(--line);border-radius:12px;background:#fff;display:block;}
+  .notes-col{flex:1 1 42%;min-width:300px;max-width:420px;}
+  .notes-col h3{margin:0 0 10px;font-size:1.02rem;font-family:"Manrope",sans-serif;}
+  .note-form{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px;}
+  .note-form select{margin-bottom:10px;}
+  .note-form textarea{margin-bottom:10px;min-height:56px;}
+  .note-list{display:flex;flex-direction:column;gap:10px;max-height:calc(76vh - 4px);overflow-y:auto;padding-right:4px;}
+  .note-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .note-card.done{opacity:.5;}
+  .note-card.done .note-text{text-decoration:line-through;}
+  .note-card-head{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .note-tag{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--accent-hover);background:#fdf1e2;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+  .note-date{font-size:.72rem;color:var(--muted);margin-left:auto;white-space:nowrap;}
+  .note-text{font-size:.88rem;white-space:pre-wrap;margin:0 0 10px;}
+  .note-actions{display:flex;gap:8px;}
+  .note-empty{color:var(--muted);font-size:.85rem;padding:26px 4px;text-align:center;border:1.5px dashed var(--line);border-radius:12px;}
+  @media (max-width:900px){ .preview-wrap{flex-direction:column;} .notes-col{max-width:none;width:100%;} .preview-iframe{height:56vh;} .note-list{max-height:none;} }
 </style>
 </head>
 <body>
@@ -124,7 +156,7 @@
   </div>
 </div>
 
-<main class="wrap">
+<main class="wrap" id="main-wrap">
 
   <!-- CONNECT SCREEN -->
   <section id="screen-connect" class="screen">
@@ -189,7 +221,19 @@
   <section id="screen-editor" class="screen">
     <h1 id="editor-title">Edit your site</h1>
     <p id="editor-sub">Changes here are saved straight to your website's GitHub repository. Your live site updates about a minute after you save.</p>
-    <div id="editor-root"></div>
+
+    <div class="tab-row">
+      <button type="button" class="tab-btn active" id="tab-btn-edit">Edit content</button>
+      <button type="button" class="tab-btn" id="tab-btn-preview">Preview &amp; Notes</button>
+    </div>
+
+    <div id="tab-panel-edit" class="tab-panel active">
+      <div id="editor-root"></div>
+    </div>
+
+    <div id="tab-panel-preview" class="tab-panel">
+      <div id="preview-root"></div>
+    </div>
   </section>
 
 </main>
@@ -486,6 +530,14 @@
     brandBody.appendChild(field('Logo', logoRow, 'Square images work best. Used in the header, footer and the intro animation.'));
     root.appendChild(sectionDetails('Brand & Theme', '', brandBody));
 
+    // SEO (search engine listing)
+    if (!c.seo) c.seo = {title:'', description:'', keywords:''};
+    var seoBody = el('div', {});
+    seoBody.appendChild(field('Page title', textInput(c.seo.title, function(v){ c.seo.title = v; }), 'Shown as the blue link text in Google search results and browser tabs. Keep it under ~60 characters — include your business name and main service area.'));
+    seoBody.appendChild(field('Meta description', textInput(c.seo.description, function(v){ c.seo.description = v; }, {textarea:true}), 'The short summary shown under your title in search results. Aim for 1–2 sentences, around 150–160 characters, that make someone want to click.'));
+    seoBody.appendChild(field('Keywords (optional)', textInput(c.seo.keywords, function(v){ c.seo.keywords = v; }), 'Comma-separated terms like "electrician Kealba, emergency electrician Melbourne west". Most search engines ignore this now, but it doesn\'t hurt to keep it accurate.'));
+    root.appendChild(sectionDetails('Search & Social (SEO)', '', seoBody));
+
     // Navigation
     var navBody = el('div', {});
     objectListEditor(navBody, c.nav, function(card, item){
@@ -615,6 +667,164 @@
     root.appendChild(sectionDetails('Page layout & section order', '', orderBody));
   }
 
+  // ---------- Preview & Notes ----------
+  var NOTE_SECTIONS = [
+    {id:'general', label:'General / whole site'},
+    {id:'header', label:'Header'},
+    {id:'hero', label:'Hero (top banner)'},
+    {id:'services', label:'Services'},
+    {id:'why-us', label:'Why Us'},
+    {id:'areas', label:'Service Area'},
+    {id:'faq', label:'FAQ'},
+    {id:'contact', label:'Contact'},
+    {id:'footer', label:'Footer'}
+  ];
+  function noteSectionLabel(id){
+    for (var i=0;i<NOTE_SECTIONS.length;i++){ if (NOTE_SECTIONS[i].id===id) return NOTE_SECTIONS[i].label; }
+    return id || 'General';
+  }
+  function fmtNoteDate(iso){
+    try{
+      var d = new Date(iso);
+      return d.toLocaleDateString(undefined, {month:'short', day:'numeric'}) + ' ' + d.toLocaleTimeString(undefined, {hour:'numeric', minute:'2-digit'});
+    }catch(e){ return ''; }
+  }
+
+  // Notes are kept in this browser only (localStorage), not saved into content.json —
+  // content.json is fetched by every visitor to render the site, so it's not a private
+  // place to jot down to-do notes. Notes are per-site (keyed by owner/repo).
+  function notesStorageKey(){
+    return 'thelectrics_admin_notes__' + state.owner + '/' + state.repo;
+  }
+  function loadNotesLocal(){
+    try{
+      var raw = localStorage.getItem(notesStorageKey());
+      if (raw) return JSON.parse(raw);
+    }catch(e){}
+    return [];
+  }
+  function saveNotesLocal(notes){
+    try{ localStorage.setItem(notesStorageKey(), JSON.stringify(notes)); }catch(e){}
+  }
+
+  function buildPreviewNotes(){
+    var root = document.getElementById('preview-root');
+    root.innerHTML = '';
+    var notes = loadNotesLocal();
+
+    var toolbar = el('div', {class:'preview-toolbar'}, [
+      el('p', {class:'hint'}, [txt('This is your real website, exactly as customers see it. Click around, then jot down anything you\'d like changed — wording, layout, colors, whatever — on the right. Notes save automatically in this browser; use "Copy all" to send them to me.')])
+    ]);
+    var refreshBtn = el('button', {type:'button', class:'btn btn-outline btn-sm'}, [txt('↻ Refresh')]);
+    var openBtn = el('a', {class:'btn btn-outline btn-sm', href:'../', target:'_blank', rel:'noopener'}, [txt('Open in new tab ↗')]);
+    toolbar.appendChild(refreshBtn);
+    toolbar.appendChild(openBtn);
+    root.appendChild(toolbar);
+
+    var wrap = el('div', {class:'preview-wrap'});
+
+    // iframe column
+    var iframe = el('iframe', {class:'preview-iframe', src:'../', title:'Live site preview'});
+    refreshBtn.addEventListener('click', function(){ iframe.src = '../?_r=' + Date.now(); });
+    var frameCol = el('div', {class:'preview-frame-col'}, [iframe]);
+    wrap.appendChild(frameCol);
+
+    // notes column
+    var notesCol = el('div', {class:'notes-col'});
+    var notesHead = el('div', {style:'display:flex;align-items:center;gap:10px;margin-bottom:10px;'}, [
+      el('h3', {}, [txt('Your notes')])
+    ]);
+    var copyBtn = el('button', {type:'button', class:'btn-text', style:'margin-left:auto;'}, [txt('Copy all')]);
+    notesHead.appendChild(copyBtn);
+    notesCol.appendChild(notesHead);
+
+    // add-note form
+    var sectionSel = document.createElement('select');
+    NOTE_SECTIONS.forEach(function(s){ sectionSel.appendChild(el('option', {value:s.id}, [txt(s.label)])); });
+    var noteText = document.createElement('textarea');
+    noteText.placeholder = 'e.g. "Change the headline to mention same-day service" or "Move the FAQ above the service area map"';
+    var addNoteBtn = el('button', {type:'button', class:'btn btn-solid btn-sm', style:'width:100%;justify-content:center;'}, [txt('+ Add note')]);
+    var noteForm = el('div', {class:'note-form'}, [sectionSel, noteText, addNoteBtn]);
+    notesCol.appendChild(noteForm);
+
+    var listEl = el('div', {class:'note-list'});
+    notesCol.appendChild(listEl);
+    wrap.appendChild(notesCol);
+    root.appendChild(wrap);
+
+    function updateTabBadge(){
+      var btn = document.getElementById('tab-btn-preview');
+      var open = notes.filter(function(n){ return !n.done; }).length;
+      btn.textContent = 'Preview & Notes' + (open ? ' (' + open + ')' : '');
+    }
+
+    function renderList(){
+      saveNotesLocal(notes);
+      listEl.innerHTML = '';
+      if (!notes.length){
+        listEl.appendChild(el('div', {class:'note-empty'}, [txt("No notes yet — browse the preview and add one whenever you spot something.")]));
+        updateTabBadge();
+        return;
+      }
+      notes.slice().reverse().forEach(function(note){
+        var idx = notes.indexOf(note);
+        var head = el('div', {class:'note-card-head'}, [
+          el('span', {class:'note-tag'}, [txt(noteSectionLabel(note.section))]),
+          el('span', {class:'note-date'}, [txt(fmtNoteDate(note.createdAt))])
+        ]);
+        var textEl = el('p', {class:'note-text'}, [txt(note.text)]);
+        var doneBtn = el('button', {type:'button', class:'btn btn-outline btn-sm'}, [txt(note.done ? 'Mark not done' : 'Mark done')]);
+        doneBtn.addEventListener('click', function(){ note.done = !note.done; renderList(); });
+        var delBtn = el('button', {type:'button', class:'btn btn-outline btn-sm btn-danger'}, [txt('Delete')]);
+        delBtn.addEventListener('click', function(){ notes.splice(idx,1); renderList(); });
+        var actions = el('div', {class:'note-actions'}, [doneBtn, delBtn]);
+        var card = el('div', {class:'note-card'+(note.done?' done':'')}, [head, textEl, actions]);
+        listEl.appendChild(card);
+      });
+      updateTabBadge();
+    }
+
+    addNoteBtn.addEventListener('click', function(){
+      var text = noteText.value.trim();
+      if (!text){ noteText.focus(); return; }
+      notes.push({ section: sectionSel.value, text: text, done:false, createdAt: new Date().toISOString() });
+      noteText.value = '';
+      renderList();
+    });
+
+    copyBtn.addEventListener('click', function(){
+      if (!notes.length){ toast("No notes to copy yet.", 'err'); return; }
+      var lines = notes.map(function(n){
+        return '[' + noteSectionLabel(n.section) + ']' + (n.done ? ' (done) ' : ' ') + n.text;
+      });
+      var text = lines.join('\n');
+      var done = function(){ toast('Notes copied — paste them to send along.', 'ok'); };
+      var fail = function(){
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); done(); }catch(e){ toast("Couldn't copy — select and copy manually.", 'err'); }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(fail);
+      } else { fail(); }
+    });
+
+    renderList();
+  }
+
+  function activateTab(which){
+    var isPreview = which === 'preview';
+    document.getElementById('tab-btn-edit').classList.toggle('active', !isPreview);
+    document.getElementById('tab-btn-preview').classList.toggle('active', isPreview);
+    document.getElementById('tab-panel-edit').classList.toggle('active', !isPreview);
+    document.getElementById('tab-panel-preview').classList.toggle('active', isPreview);
+    document.getElementById('main-wrap').classList.toggle('wrap-wide', isPreview);
+  }
+  document.getElementById('tab-btn-edit').addEventListener('click', function(){ activateTab('edit'); });
+  document.getElementById('tab-btn-preview').addEventListener('click', function(){ activateTab('preview'); });
+
   function resizeImageToDataUrl(file, maxDim, cb){
     var reader = new FileReader();
     reader.onload = function(e){
@@ -669,6 +879,8 @@
       document.getElementById('conn-status-text').textContent = owner + '/' + repo;
       document.getElementById('btn-logout').style.display = '';
       buildEditor();
+      buildPreviewNotes();
+      activateTab('edit');
       clearDirty();
       showScreen('screen-editor');
     }).catch(function(err){
@@ -718,6 +930,8 @@
     document.getElementById('loading-text').textContent = 'Reloading…';
     apiLoad().then(function(){
       buildEditor();
+      buildPreviewNotes();
+      activateTab('edit');
       clearDirty();
       showScreen('screen-editor');
     }).catch(function(err){
