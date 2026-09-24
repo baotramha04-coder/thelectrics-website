@@ -1,0 +1,92 @@
+{
+  "brand": {
+    "name": "THelectrics",
+    "logoDataUrl": ""
+  },
+  "theme": {
+    "accent": "#E8912B"
+  },
+  "nav": [
+    { "label": "Services", "href": "#services" },
+    { "label": "Why Us", "href": "#why-us" },
+    { "label": "Areas", "href": "#areas" },
+    { "label": "FAQ", "href": "#faq" }
+  ],
+  "header": {
+    "phone": "0468 31 32 33",
+    "ctaLabel": "Get a Quote",
+    "ctaHref": "#contact"
+  },
+  "hero": {
+    "eyebrow": "Licensed Electrician — Kealba & Melbourne's West",
+    "headlinePart1": "Wired Right.",
+    "headlinePart2": "Done Fast.",
+    "lede": "THelectrics handles everything from powerpoints to full switchboard upgrades for homes and businesses across Melbourne's west — fast, tidy, and fully licensed.",
+    "ctaPrimaryLabel": "Call 0468 31 32 33",
+    "ctaPrimaryHref": "tel:0468313233",
+    "ctaSecondaryLabel": "Get a free quote",
+    "ctaSecondaryHref": "#contact",
+    "trustItems": [
+      { "icon": "shield-check", "text": "Licensed & insured" },
+      { "icon": "clock", "text": "Same-week bookings" },
+      { "icon": "home-map", "text": "Based in Kealba, VIC" }
+    ]
+  },
+  "sections": [
+    { "id": "services", "visible": true },
+    { "id": "why-us", "visible": true },
+    { "id": "areas", "visible": true },
+    { "id": "faq", "visible": true },
+    { "id": "contact", "visible": true }
+  ],
+  "services": {
+    "eyebrow": "Services",
+    "heading": "Straightforward electrical work, done properly",
+    "intro": "No callout theatrics — just licensed work, explained clearly, priced upfront.",
+    "items": [
+      { "icon": "switchboard", "title": "Switchboard upgrades & safety switches", "description": "Old fuse boxes replaced with compliant switchboards and RCD protection." },
+      { "icon": "bulb", "title": "Powerpoints, lighting & LED upgrades", "description": "New circuits, downlights and LED retrofits for homes and offices." },
+      { "icon": "alarm-star", "title": "Smoke alarm compliance", "description": "Interconnected, up-to-standard alarms fitted for rentals and resales." },
+      { "icon": "zigzag-fault", "title": "Rewiring & fault finding", "description": "Tripping breakers, dead circuits and ageing wiring sorted properly." },
+      { "icon": "clock", "title": "Emergency callouts", "description": "Power out or something sparking? We answer the phone, not a machine." },
+      { "icon": "commercial-building", "title": "Commercial & small business fit-outs", "description": "Data, power and lighting for shops, offices and small warehouses." }
+    ]
+  },
+  "whyUs": {
+    "eyebrow": "Why THelectrics",
+    "heading": "What you get with every job",
+    "items": [
+      { "icon": "shield-check", "title": "Licensed & insured", "description": "Fully qualified and covered on every job, big or small." },
+      { "icon": "pricing-flow", "title": "Upfront, fixed pricing", "description": "You'll know the cost before we pick up a tool." },
+      { "icon": "checkmark", "title": "Tidy, reliable work", "description": "We turn up on time and leave the site clean." },
+      { "icon": "home-map", "title": "Local to Kealba", "description": "Based in the west, servicing the suburbs we know well." }
+    ]
+  },
+  "areas": {
+    "eyebrow": "Service area",
+    "intro": "Based in Kealba and working right across Melbourne's western suburbs.",
+    "pills": ["Kealba", "Sunshine", "St Albans", "Deer Park", "Albion", "Keilor", "Taylors Lakes", "Sydenham"]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Common questions",
+    "items": [
+      { "question": "Are you a licensed electrician?", "answer": "Yes — all work is carried out by a licensed, insured electrician in line with Victorian electrical safety requirements.", "openByDefault": true },
+      { "question": "Do you handle emergency callouts?", "answer": "Yes. Call 0468 31 32 33 and we'll talk through what's happening and get someone out as soon as we can.", "openByDefault": false },
+      { "question": "Will I get a quote before work starts?", "answer": "Always. You'll get a clear, fixed price before any work begins — no surprises on the invoice.", "openByDefault": false },
+      { "question": "What suburbs do you cover?", "answer": "We're based in Kealba and regularly work across Sunshine, St Albans, Deer Park, Albion, Keilor, Taylors Lakes and Sydenham.", "openByDefault": false }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "heading": "Get in touch with THelectrics",
+    "intro": "Give us a call or send an email with what's going on — we'll get back to you the same day.",
+    "phone": "0468 31 32 33",
+    "email": "Pha@thelectrics.net",
+    "address": "208 Sunshine Avenue, Kealba, VIC 3021"
+  },
+  "footer": {
+    "addressLine": "208 Sunshine Avenue, Kealba, VIC 3021 · 0468 31 32 33",
+    "copyright": "© 2026 THelectrics"
+  }
+}
