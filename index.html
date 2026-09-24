@@ -3,7 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>THelectrics</title>
+<title>THelectrics | Licensed Electrician in Kealba &amp; Melbourne's West</title>
+<meta name="description" content="Licensed, insured electrician based in Kealba servicing Sunshine, St Albans, Deer Park, Albion, Keilor, Taylors Lakes, Sydenham and Melbourne's western suburbs. Switchboard upgrades, powerpoints, lighting, smoke alarms, rewiring and emergency callouts. Call 0468 31 32 33 for a free quote.">
+<meta name="keywords" content="electrician Kealba, electrician Melbourne west, licensed electrician Sunshine, electrician St Albans, electrician Deer Park, emergency electrician, switchboard upgrade, smoke alarm compliance">
+<link rel="canonical" href="https://thelectricsaus.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="THelectrics">
+<meta property="og:title" content="THelectrics | Licensed Electrician in Kealba &amp; Melbourne's West">
+<meta property="og:description" content="Licensed, insured electrician based in Kealba servicing Melbourne's western suburbs. Switchboard upgrades, powerpoints, lighting, smoke alarms, rewiring and emergency callouts.">
+<meta property="og:url" content="https://thelectricsaus.com/">
+<meta property="og:image" content="https://thelectricsaus.com/og-image.png">
+<meta property="og:locale" content="en_AU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="THelectrics | Licensed Electrician in Kealba &amp; Melbourne's West">
+<meta name="twitter:description" content="Licensed, insured electrician based in Kealba servicing Melbourne's western suburbs.">
+<meta name="twitter:image" content="https://thelectricsaus.com/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Electrician",
+  "name": "THelectrics",
+  "image": "https://thelectricsaus.com/og-image.png",
+  "telephone": "+61468313233",
+  "email": "Pha@thelectrics.net",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "208 Sunshine Avenue",
+    "addressLocality": "Kealba",
+    "addressRegion": "VIC",
+    "postalCode": "3021",
+    "addressCountry": "AU"
+  },
+  "areaServed": ["Kealba","Sunshine","St Albans","Deer Park","Albion","Keilor","Taylors Lakes","Sydenham"],
+  "url": "https://thelectricsaus.com/",
+  "priceRange": "$$"
+}
+</script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Work+Sans:wght@400;500;600&display=swap');
 
@@ -314,7 +349,7 @@
   </section>
 
   <div id="sections-root">
-    <section id="section-services">
+    <section id="services">
       <div class="wrap">
         <div class="section-head">
           <span class="eyebrow" id="services-eyebrow"></span>
@@ -325,7 +360,7 @@
       </div>
     </section>
 
-    <section id="section-why-us">
+    <section id="why-us">
       <div class="wrap">
         <div class="section-head">
           <span class="eyebrow" id="whyus-eyebrow"></span>
@@ -335,7 +370,7 @@
       </div>
     </section>
 
-    <section id="section-areas">
+    <section id="areas">
       <div class="wrap">
         <div class="areas-band">
           <div>
@@ -347,7 +382,7 @@
       </div>
     </section>
 
-    <section id="section-faq">
+    <section id="faq">
       <div class="wrap">
         <div class="section-head">
           <span class="eyebrow" id="faq-eyebrow"></span>
@@ -357,7 +392,7 @@
       </div>
     </section>
 
-    <section id="section-contact">
+    <section id="contact">
       <div class="wrap">
         <div class="contact-grid">
           <div>
@@ -411,7 +446,6 @@
       document.documentElement.style.setProperty('--accent-hover', shade(c.theme.accent, -12));
     }
     if (c.brand){
-      document.title = c.brand.name || 'THelectrics';
       document.querySelectorAll('[data-bind="brand-name"], [data-bind="brand-name-footer"]').forEach(function(n){ n.textContent = c.brand.name; });
       if (c.brand.logoDataUrl){
         ['brand-logo-header','brand-logo-footer','power-bolt'].forEach(function(id){
@@ -419,6 +453,24 @@
           if (img) img.src = c.brand.logoDataUrl;
         });
       }
+    }
+
+    if (c.seo){
+      if (c.seo.title){
+        document.title = c.seo.title;
+        var ogt = document.querySelector('meta[property="og:title"]'); if (ogt) ogt.setAttribute('content', c.seo.title);
+        var twt = document.querySelector('meta[name="twitter:title"]'); if (twt) twt.setAttribute('content', c.seo.title);
+      }
+      if (c.seo.description){
+        var md = document.querySelector('meta[name="description"]'); if (md) md.setAttribute('content', c.seo.description);
+        var ogd = document.querySelector('meta[property="og:description"]'); if (ogd) ogd.setAttribute('content', c.seo.description);
+        var twd = document.querySelector('meta[name="twitter:description"]'); if (twd) twd.setAttribute('content', c.seo.description);
+      }
+      if (c.seo.keywords){
+        var mk = document.querySelector('meta[name="keywords"]'); if (mk) mk.setAttribute('content', c.seo.keywords);
+      }
+    } else if (c.brand){
+      document.title = c.brand.name || 'THelectrics';
     }
 
     var navRoot = document.getElementById('nav-links');
@@ -529,7 +581,7 @@
     if (c.sections){
       var root = document.getElementById('sections-root');
       c.sections.forEach(function(s){
-        var sec = document.getElementById('section-'+s.id);
+        var sec = document.getElementById(s.id);
         if (!sec || !root) return;
         sec.style.display = s.visible ? '' : 'none';
         root.appendChild(sec);
