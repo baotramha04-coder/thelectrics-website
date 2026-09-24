@@ -9,7 +9,7 @@
   "nav": [
     {
       "label": "Services",
-      "href": "#services"
+      "href": "#services #"
     },
     {
       "label": "Why Us",
@@ -189,5 +189,10 @@
   "footer": {
     "addressLine": "208 Sunshine Avenue, Kealba, VIC 3021 · 0468 31 32 33",
     "copyright": "© 2026 THelectrics"
+  },
+  "seo": {
+    "title": "TH Electrics | Electrical Services",
+    "description": "TH Electrics provides professional electrical services with reliable, safe, and quality solutions for residential and commercial projects.",
+    "keywords": "electrician, electrical services, electrical contractor, residential electrician, commercial electrician, TH Electrics, Kelba electrician, Victoria electrician."
   }
 }
